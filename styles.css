@@ -1,0 +1,156 @@
+:root {
+  font-family: "Inter", "SF Pro JP", "Hiragino Sans", "Noto Sans JP", system-ui, sans-serif;
+  
+  /* === ライトモード（デフォルト）の設定 === */
+  --bg-gradient: radial-gradient(circle at top left, #eef2f3, #8e9eab);
+  --glass-bg: rgba(255, 255, 255, 0.65);
+  --glass-border: rgba(255, 255, 255, 0.4);
+  --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.15);
+  
+  --text-main: #1f2937;
+  --text-muted: #6b7280;
+  --text-placeholder: rgba(107, 114, 128, 0.4);
+  
+  --divider: linear-gradient(to right, transparent, rgba(0,0,0,0.1), transparent);
+}
+
+/* === ダークモードの設定（OS設定に合わせて自動適用） === */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* 深い藍色〜チャコールグレーのグラデーション */
+    --bg-gradient: radial-gradient(circle at top left, #1e293b, #0f172a);
+    
+    /* 黒に近い半透明ガラス */
+    --glass-bg: rgba(15, 23, 42, 0.7);
+    
+    /* 境界線は薄く発光させる */
+    --glass-border: rgba(255, 255, 255, 0.08);
+    --glass-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    
+    /* 文字色は明るいグレー〜白 */
+    --text-main: #f1f5f9;
+    --text-muted: #94a3b8;
+    --text-placeholder: rgba(148, 163, 184, 0.3);
+    
+    --divider: linear-gradient(to right, transparent, rgba(255,255,255,0.1), transparent);
+  }
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-gradient);
+  color: var(--text-main);
+  padding: 20px;
+  /* ダークモード切り替え時の色変化を滑らかにする */
+  transition: background 0.5s ease, color 0.5s ease;
+}
+
+.app {
+  width: 100%;
+  max-width: 800px;
+  animation: fadeIn 0.8s ease-out;
+}
+
+.glass-panel {
+  background: var(--glass-bg);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+  padding: 40px;
+  box-shadow: var(--glass-shadow);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  transition: background 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+textarea {
+  width: 100%;
+  border: none;
+  background: transparent;
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--text-main);
+  resize: vertical;
+  min-height: 300px;
+  padding: 0;
+  font-family: inherit;
+  outline: none;
+  transition: color 0.3s ease;
+}
+
+textarea::placeholder {
+  color: var(--text-placeholder);
+}
+
+.divider {
+  height: 1px;
+  background: var(--divider);
+  width: 100%;
+  transition: background 0.3s ease;
+}
+
+.stats {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--text-main);
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.02em;
+  transition: color 0.3s ease;
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .glass-panel {
+    padding: 24px;
+    border-radius: 20px;
+  }
+  
+  textarea {
+    min-height: 200px;
+    font-size: 1rem;
+  }
+
+  .stat-value {
+    font-size: 1.5rem;
+  }
+  
+  .stat-label {
+    font-size: 0.65rem;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
